@@ -2,8 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { ADD_ERROR, ErrorAction } from '../errors/types';
 import { Employee } from './employee.interface';
-import { PagingOptions } from './paging-options.interface';
-import { ADD_EMPLOYEES, AddEmployeesAction, EmployeesActionTypes, GET_PAGED_EMPLOYEES } from './types';
+import { ADD_EMPLOYEES, EmployeesActionTypes } from './types';
 
 const apiUrl = 'https://hiring.rewardgateway.net/list';
 const requestOptions = {
@@ -27,16 +26,5 @@ export const fetchEmployees = () => {
 					payload: error
 				});
 			});
-	};
-};
-
-export const getEmployees = (payload: PagingOptions): EmployeesActionTypes => {
-	return {
-		type: GET_PAGED_EMPLOYEES,
-		payload: {
-			page: payload.page,
-			size: payload.size,
-			filter: payload.filter
-		}
 	};
 };
