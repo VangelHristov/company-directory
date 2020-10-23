@@ -1,12 +1,23 @@
-import { Action } from 'redux';
-import {Employee} from '../actions/interfaces';
-import {ADD_EMPLOYEES, GET_EMPLOYEES, SAVE_BACKGROUND, SAVE_EMPLOYEE_LABEL} from '../actions/types';
+import { ADD_EMPLOYEES, EmployeesActionTypes, EmployeesState, GET_PAGED_EMPLOYEES } from '../actions/employees/types';
 
-export default function employeesReducer(state: any[] = [], action: any) {
+const initialState: EmployeesState = {
+	employees: []
+};
+
+export default function employeesReducer(state: EmployeesState = initialState, action: EmployeesActionTypes) {
 	switch (action.type) {
 
 		case ADD_EMPLOYEES:
-			return [ ...action.payload];
+			return {
+				employees: state.employees.concat(action.payload)
+			};
+		case GET_PAGED_EMPLOYEES:
+			const {page, size} = action.payload;
+			const startIndex = page * size;
+
+			return {
+				employees: state.employees.slice(startIndex, startIndex + size)
+			};
 		default:
 			return state;
 	}
