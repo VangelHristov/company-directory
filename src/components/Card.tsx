@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Employee } from '../actions/employees/types';
+import { Employee } from '../interfaces/employee.interface';
 import CardBody from './CardBody';
 import CardImage from './CardImage';
 

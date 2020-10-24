@@ -1,8 +1,8 @@
 import React from 'react';
-import EmployeesList from './app/EmployeesList';
+import EmployeesPage from './components/EmployeesPage';
 
 function App() {
-	return (<EmployeesList />);
+	return (<EmployeesPage />);
 }
 
 export default App;
