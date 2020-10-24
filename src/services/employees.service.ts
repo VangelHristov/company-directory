@@ -36,7 +36,6 @@ export class EmployeesService {
 	}
 
 	private getPage(pageNumber: number, size: number, filter: string): PagedData<Employee> {
-
 		let totalElements = this.employees.length;
 		let totalPages = (totalElements > 0 && size > 0) ? Math.ceil(totalElements / size) : 0;
 
@@ -48,7 +47,7 @@ export class EmployeesService {
 		}
 
 		const startIndex = pageNumber * size;
-		const count = startIndex + size > totalElements ? totalElements : startIndex + size;
+		const endIndex = startIndex + size > totalElements ? totalElements : startIndex + size;
 
 		let employees = this.employees.slice();
 		if (filter) {
@@ -59,7 +58,7 @@ export class EmployeesService {
 		totalPages = (totalElements > 0 && size > 0) ? Math.ceil(totalElements / size) : 0;
 
 		return {
-			data: employees.slice(startIndex, count),
+			data: employees.slice(startIndex, endIndex),
 			page: {size, number: pageNumber, totalElements, totalPages, filter}
 		};
 	}

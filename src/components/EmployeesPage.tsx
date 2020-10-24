@@ -1,16 +1,17 @@
+import { CircularProgress } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import React from 'react';
 import { EMPTY, Subject } from 'rxjs';
-import { catchError, debounceTime, switchMap, takeUntil, throttleTime } from 'rxjs/operators';
+import { catchError, debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { Employee } from '../interfaces/employee.interface';
 import { PageOptions } from '../interfaces/page-options.interface';
 import { PagedData } from '../interfaces/paged-data.interface';
 import { EmployeesService } from '../services/employees.service';
-import Card from './Card';
+import EmployeesList from './EmployeesList';
 import FlexContainer from './FlexContainer';
 import ListHeader from './ListHeader';
 
-class EmployeesPage extends React.Component<{}, PagedData<Employee>> {
+class EmployeesPage extends React.Component<{}, PagedData<Employee> & { loading: boolean }> {
 
 	state = {
 		data: [],
@@ -20,7 +21,8 @@ class EmployeesPage extends React.Component<{}, PagedData<Employee>> {
 			filter: '',
 			totalElements: 0,
 			totalPages: 0
-		}
+		},
+		loading: true
 	};
 
 	private page$ = new Subject<PageOptions>();
@@ -39,7 +41,11 @@ class EmployeesPage extends React.Component<{}, PagedData<Employee>> {
 					this.employeesService.getEmployees$(options).pipe(catchError(() => EMPTY))),
 				takeUntil(this.dispose$)
 			)
-			.subscribe((response: PagedData<Employee>) => this.setState(response));
+			.subscribe((response: PagedData<Employee>) => this.setState({
+				loading: false,
+				data: response.data,
+				page: response.page
+			}));
 
 		this.filter$
 			.pipe(
@@ -72,17 +78,26 @@ class EmployeesPage extends React.Component<{}, PagedData<Employee>> {
 
 	render() {
 		return (
-			<FlexContainer>
-				<ListHeader setFilter={this.setFilter}/>
-				{this.state.data.map((employee: Employee, id: number) => <Card key={id} employee={employee}/>)}
-				<Pagination
-					className="mt-40 mb-40"
-					count={this.state.page.totalPages}
-					variant='outlined'
-					shape='rounded'
-					size='large'
-					onChange={this.getNextPage}/>
-			</FlexContainer>
+			<main>
+				<FlexContainer className={this.state.loading ? '' : 'hidden'}>
+					<span>Loading...</span>
+					<CircularProgress/>
+				</FlexContainer>
+				<div className={this.state.loading ? 'hidden' : ''}>
+					<FlexContainer>
+						<ListHeader setFilter={this.setFilter}/>
+						<EmployeesList employees={this.state.data}/>
+						<Pagination
+							className={'mt-40 mb-40 ' + (this.state.data.length < 1 ? 'hidden' : '')}
+							count={this.state.page.totalPages}
+							variant='outlined'
+							shape='rounded'
+							size='large'
+							onChange={this.getNextPage}/>
+					</FlexContainer>
+				</div>
+
+			</main>
 		);
 	}
 }
