@@ -11,9 +11,11 @@ import EmployeesList from './EmployeesList';
 import FlexContainer from './FlexContainer';
 import ListHeader from './ListHeader';
 
-class EmployeesPage extends React.Component<{}, PagedData<Employee> & { loading: boolean }> {
+type State = PagedData<Employee> & { loading: boolean };
 
-	state = {
+class EmployeesPage extends React.Component<{}, State> {
+
+	state: State = {
 		data: [],
 		page: {
 			number: 0,
@@ -72,17 +74,17 @@ class EmployeesPage extends React.Component<{}, PagedData<Employee> & { loading:
 		});
 	}
 
-	setFilter(event: any): void {
+	setFilter(event: React.ChangeEvent<HTMLInputElement>): void {
 		this.filter$.next(event.target.value);
 	}
 
 	render() {
 		return (
 			<main>
-				<div className={this.state.loading ? '' : 'hidden'}>
+				<FlexContainer className={this.state.loading ? '' : 'hidden'}>
 					<span>Loading...</span>
 					<CircularProgress/>
-				</div>
+				</FlexContainer>
 				<div className={this.state.loading ? 'hidden' : ''}>
 					<FlexContainer>
 						<ListHeader setFilter={this.setFilter}/>
