@@ -79,10 +79,10 @@ class EmployeesPage extends React.Component<{}, PagedData<Employee> & { loading:
 	render() {
 		return (
 			<main>
-				<FlexContainer className={this.state.loading ? '' : 'hidden'}>
+				<div className={this.state.loading ? '' : 'hidden'}>
 					<span>Loading...</span>
 					<CircularProgress/>
-				</FlexContainer>
+				</div>
 				<div className={this.state.loading ? 'hidden' : ''}>
 					<FlexContainer>
 						<ListHeader setFilter={this.setFilter}/>
@@ -96,7 +96,6 @@ class EmployeesPage extends React.Component<{}, PagedData<Employee> & { loading:
 							onChange={this.getNextPage}/>
 					</FlexContainer>
 				</div>
-
 			</main>
 		);
 	}
