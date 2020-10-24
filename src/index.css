@@ -8,7 +8,14 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	width: 100%;
 	min-height: 100%;
-	background: #00968899;
 	font-size: 16px;
 	overflow-x: hidden;
+}
+
+.mt-40 {
+	margin-top: 40px;
+}
+
+.mb-40 {
+	margin-bottom: 40px;
 }

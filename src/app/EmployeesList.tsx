@@ -1,3 +1,4 @@
+import Pagination from '@material-ui/lab/Pagination';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,7 +10,6 @@ import FlexContainer from './FlexContainer';
 
 class EmployeesList extends React.Component<any> {
 	private pageSize = 20;
-	private pageNumber = 0;
 	private filter: string | null = null;
 
 	constructor(props: any) {
@@ -17,11 +17,9 @@ class EmployeesList extends React.Component<any> {
 		this.getNextPage = this.getNextPage.bind(this);
 	}
 
-	getNextPage(): void {
-		this.pageNumber++;
-
+	getNextPage(event: unknown, pageNumber: number): void {
 		this.props.getPage({
-			page: this.pageNumber,
+			page: pageNumber - 1,
 			size: this.pageSize,
 			filter: this.filter
 		});
@@ -32,7 +30,14 @@ class EmployeesList extends React.Component<any> {
 		return (
 			<FlexContainer>
 				{data.map((employee: Employee, id: number) => <Card key={id} employee={employee}/>)}
-				<button onClick={this.getNextPage}>Get Next Page</button>
+				{data.length > 0 ? <Pagination
+					className="mt-40 mb-40"
+					count={this.props.currentPage.page.totalPages}
+					variant='outlined'
+					shape='rounded'
+					size='large'
+					onChange={this.getNextPage}
+				/> : null}
 			</FlexContainer>
 		);
 	}
