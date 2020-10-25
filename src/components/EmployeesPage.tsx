@@ -1,4 +1,5 @@
 import { CircularProgress } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Pagination from '@material-ui/lab/Pagination';
 import React from 'react';
@@ -70,7 +71,7 @@ class EmployeesPage extends React.Component<{}, State> {
 		this.dispose$.complete();
 	}
 
-	getNextPage(event: unknown, pageNumber: number, filter: string = this.state.page.filter): void {
+	getNextPage(event: unknown = null, pageNumber: number = 1, filter: string = this.state.page.filter): void {
 		this.page$.next({
 			size: this.state.page.size,
 			number: pageNumber - 1,
@@ -105,6 +106,12 @@ class EmployeesPage extends React.Component<{}, State> {
 					open={this.state.showNotification}
 					message='An error occurred while fetching the data.'
 					key='topcenter'
+					action={
+						<React.Fragment>
+							<Button color="secondary" size="small" onClick={this.getNextPage}>
+								Retry
+							</Button>
+						</React.Fragment>}
 				/>
 			</main>
 		);
