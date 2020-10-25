@@ -21,7 +21,7 @@ const Card = styled.div`
   display: flex;
 `;
 
-export default (props: Readonly<{ employee: Employee }>) => {
+export default (props: Readonly<{ employee: Employee, onClick: any }>) => {
 	return (
 		<Card className='card'>
 			<CardImage src={props.employee.avatar} alt={props.employee.name}/>

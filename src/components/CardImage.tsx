@@ -16,6 +16,7 @@ const Image = styled.img`
 `;
 
 const CardImage = (props: Readonly<{ src: string, alt: string }>) => {
-	return (<ImageWrapper><Image src={props.src} alt={props.alt}/></ImageWrapper>);
+	const onError = (errorEvent: any) => errorEvent.nativeEvent.target.src = '/default-avatar.png';
+	return (<ImageWrapper><Image src={props.src} alt={props.alt} onError={onError}/></ImageWrapper>);
 };
 export default CardImage;

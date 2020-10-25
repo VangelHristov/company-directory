@@ -1,4 +1,5 @@
 import { CircularProgress } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
 import Pagination from '@material-ui/lab/Pagination';
 import React from 'react';
 import { EMPTY, Subject } from 'rxjs';
@@ -11,7 +12,7 @@ import EmployeesList from './EmployeesList';
 import FlexContainer from './FlexContainer';
 import ListHeader from './ListHeader';
 
-type State = PagedData<Employee> & { loading: boolean };
+type State = PagedData<Employee> & { loading: boolean, showNotification: boolean };
 
 class EmployeesPage extends React.Component<{}, State> {
 
@@ -24,7 +25,8 @@ class EmployeesPage extends React.Component<{}, State> {
 			totalElements: 0,
 			totalPages: 0
 		},
-		loading: true
+		loading: true,
+		showNotification: false
 	};
 
 	private page$ = new Subject<PageOptions>();
@@ -40,14 +42,13 @@ class EmployeesPage extends React.Component<{}, State> {
 		this.page$
 			.pipe(
 				switchMap((options: PageOptions) =>
-					this.employeesService.getEmployees$(options).pipe(catchError(() => EMPTY))),
+					this.employeesService.getEmployees$(options).pipe(catchError(() => {
+						this.setState({...this.state, showNotification: true, loading: false});
+						return EMPTY;
+					}))),
 				takeUntil(this.dispose$)
 			)
-			.subscribe((response: PagedData<Employee>) => this.setState({
-				loading: false,
-				data: response.data,
-				page: response.page
-			}));
+			.subscribe((response: PagedData<Employee>) => this.setState({loading: false, ...response}));
 
 		this.filter$
 			.pipe(
@@ -98,6 +99,12 @@ class EmployeesPage extends React.Component<{}, State> {
 							onChange={this.getNextPage}/>
 					</FlexContainer>
 				</div>
+				<Snackbar
+					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+					open={this.state.showNotification}
+					message='An error occurred while fetching the data.'
+					key='topcenter'
+				/>
 			</main>
 		);
 	}
