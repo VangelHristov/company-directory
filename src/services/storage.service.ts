@@ -14,6 +14,16 @@ export class StorageService {
 		this.setObject(items, this.itemsKey);
 	}
 
+	saveLabel(label: string, itemId: string): void {
+		const items: StorageListItems = this.getListItems(this.itemsKey);
+		const item: ListItem = items[itemId] as ListItem ?? {};
+
+		item.label = label;
+		items[itemId] = item;
+
+		this.setObject(items, this.itemsKey);
+	}
+
 	getStorageItems(): StorageListItems {
 		return this.getListItems(this.itemsKey);
 	}

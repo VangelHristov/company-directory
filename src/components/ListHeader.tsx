@@ -16,7 +16,7 @@ class ListHeader extends React.Component<Props> {
 			<Header>
 				<TextField
 					id="standard-search"
-					label="Search by name"
+					label="Search by label"
 					type="search"
 					onChange={this.props.setFilter}/>
 			</Header>

@@ -33,9 +33,9 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 		if (this.props.employees.length > 0) {
 			return (
 				<div>
-					{this.props.employees.map((employee: Employee, id: number) =>
+					{this.props.employees.map((employee: Employee) =>
 						<Card
-							key={id}
+							key={employee.uuid}
 							employee={employee}
 							imageClicked={this.zoomIn}
 						/>)}

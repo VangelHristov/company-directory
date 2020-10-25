@@ -32,7 +32,6 @@ class EmployeesPage extends React.Component<{}, State> {
 	private page$ = new Subject<PageOptions>();
 	private filter$ = new Subject<string>();
 	private dispose$ = new Subject<void>();
-	private employeesService: EmployeesService = new EmployeesService();
 
 	constructor(props: Readonly<{}>) {
 		super(props);
@@ -42,7 +41,7 @@ class EmployeesPage extends React.Component<{}, State> {
 		this.page$
 			.pipe(
 				switchMap((options: PageOptions) =>
-					this.employeesService.getEmployees$(options).pipe(catchError(() => {
+					EmployeesService.getEmployees$(options).pipe(catchError(() => {
 						this.setState({...this.state, showNotification: true, loading: false});
 						return EMPTY;
 					}))),

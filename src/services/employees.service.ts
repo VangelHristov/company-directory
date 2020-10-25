@@ -12,10 +12,10 @@ import { StorageListItems, StorageService } from './storage.service';
 axiosRetry(axios, {retries: 5});
 
 export class EmployeesService {
-	private employees: Employee[] = [];
-	private storageService = new StorageService();
-	private readonly apiUrl = 'https://hiring.rewardgateway.net/list';
-	private readonly auth = {username: 'medium', password: 'medium'};
+	private static employees: Employee[] = [];
+	private static storageService = new StorageService();
+	private static readonly apiUrl = 'https://hiring.rewardgateway.net/list';
+	private static readonly auth = {username: 'medium', password: 'medium'};
 
 	private static isMatch(source: string, searchedValue: string): boolean {
 		if (!source || !searchedValue) {
@@ -25,21 +25,37 @@ export class EmployeesService {
 		return source.toUpperCase().includes(searchedValue.toUpperCase());
 	};
 
-	getEmployees$(page: PageOptions): Observable<PagedData<Employee>> {
-		if (this.employees.length > 0) {
-			return of(this.getPage(page.number, page.size, page.filter));
+	public static getEmployees$(page: PageOptions): Observable<PagedData<Employee>> {
+		if (EmployeesService.employees.length > 0) {
+			return of(EmployeesService.getPage(page.number, page.size, page.filter));
 		}
 
-		return fromPromise(axios.get(this.apiUrl, {auth: this.auth}))
+		return fromPromise(axios.get(EmployeesService.apiUrl, {auth: EmployeesService.auth}))
 			.pipe(
 				tap((response: AxiosResponse<Employee[]>) => this.employees = response.data),
-				map(() => this.getPage(page.number, page.size, page.filter)),
+				map(() => EmployeesService.getPage(page.number, page.size, page.filter)),
 				take(1)
 			);
 	}
 
-	private getPage(pageNumber: number, size: number, filter: string): PagedData<Employee> {
-		let totalElements = this.employees.length;
+	public static updateBackground(background: string, employeeId: string): void {
+		EmployeesService.storageService.saveBackground(background, employeeId);
+		const employeeToBeUpdated = EmployeesService.employees.find(employee => employee.uuid === employeeId);
+		if (employeeToBeUpdated !== undefined) {
+			employeeToBeUpdated.background = background;
+		}
+	}
+
+	public static updateLabel(label: string, employeeId: string): void {
+		EmployeesService.storageService.saveLabel(label, employeeId);
+		const employeeToBeUpdated = EmployeesService.employees.find(employee => employee.uuid === employeeId);
+		if (employeeToBeUpdated !== undefined) {
+			employeeToBeUpdated.background = label;
+		}
+	}
+
+	private static getPage(pageNumber: number, size: number, filter: string): PagedData<Employee> {
+		let totalElements = EmployeesService.employees.length;
 		let totalPages = (totalElements > 0 && size > 0) ? Math.ceil(totalElements / size) : 0;
 
 		if (pageNumber > totalPages || pageNumber < 0) {
@@ -52,16 +68,16 @@ export class EmployeesService {
 		const startIndex = pageNumber * size;
 		const endIndex = startIndex + size > totalElements ? totalElements : startIndex + size;
 
-		let employees = this.employees.slice();
+		let employees = EmployeesService.employees.slice();
 		if (filter) {
-			employees = employees.filter((employee: Employee) => EmployeesService.isMatch(employee.name, filter));
+			employees = employees.filter((employee: Employee) => EmployeesService.isMatch(employee.label, filter));
 		}
 
 		totalElements = employees.length;
 		totalPages = (totalElements > 0 && size > 0) ? Math.ceil(totalElements / size) : 0;
 
-		const storageItems = this.storageService.getStorageItems();
-		employees = this.mapEmployees(employees.slice(startIndex, endIndex), storageItems);
+		const storageItems = EmployeesService.storageService.getStorageItems();
+		employees = EmployeesService.mapLabelsAndBackground(employees.slice(startIndex, endIndex), storageItems);
 
 		return {
 			data: employees,
@@ -69,7 +85,7 @@ export class EmployeesService {
 		};
 	}
 
-	private mapEmployees(employees: Employee[], storageItems: StorageListItems): Employee[] {
+	private static mapLabelsAndBackground(employees: Employee[], storageItems: StorageListItems): Employee[] {
 		return employees.map(employee => {
 			const item: ListItem = storageItems[employee.uuid] ?? {background: '#ffffff', label: ''};
 			employee.background = item.background;
