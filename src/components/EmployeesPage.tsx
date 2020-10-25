@@ -34,7 +34,7 @@ class EmployeesPage extends React.Component<{}, State> {
 	private dispose$ = new Subject<void>();
 	private employeesService: EmployeesService = new EmployeesService();
 
-	constructor(props: {} = {}) {
+	constructor(props: Readonly<{}>) {
 		super(props);
 		this.getNextPage = this.getNextPage.bind(this);
 		this.setFilter = this.setFilter.bind(this);

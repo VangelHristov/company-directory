@@ -4,7 +4,6 @@ import { Employee } from '../interfaces/employee.interface';
 import CardBody from './CardBody';
 import CardImage from './CardImage';
 
-
 const Card = styled.div`
   font-family: 'Open Sans', sans-serif;
   width: 800px;
@@ -21,10 +20,16 @@ const Card = styled.div`
   display: flex;
 `;
 
-export default (props: Readonly<{ employee: Employee, onClick: any }>) => {
+type Props = { employee: Employee, imageClicked: React.MouseEventHandler<any> };
+
+export default (props: Readonly<Props>) => {
 	return (
 		<Card className='card'>
-			<CardImage src={props.employee.avatar} alt={props.employee.name}/>
+			<CardImage
+				src={props.employee.avatar}
+				alt={props.employee.name}
+				imageClicked={props.imageClicked}
+			/>
 			<CardBody employee={props.employee}/>
 		</Card>
 	);

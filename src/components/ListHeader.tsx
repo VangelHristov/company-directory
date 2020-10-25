@@ -8,11 +8,17 @@ const Header = styled.header`
 	justify-content: space-between;
 `;
 
-class ListHeader extends React.Component<any, any> {
+type Props = {setFilter: React.ChangeEventHandler<HTMLInputElement>};
+
+class ListHeader extends React.Component<Props> {
 	render() {
 		return (
 			<Header>
-				<TextField id="standard-search" label="Search by name" type="search" onChange={this.props.setFilter} />
+				<TextField
+					id="standard-search"
+					label="Search by name"
+					type="search"
+					onChange={this.props.setFilter}/>
 			</Header>
 		);
 	}

@@ -16,12 +16,17 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 
 	constructor(props: { readonly employees: Employee[] }) {
 		super(props);
-		this.imageClicked = this.imageClicked.bind(this);
+		this.zoomIn = this.zoomIn.bind(this);
+		this.zoomOut = this.zoomOut.bind(this);
 	}
 
-	imageClicked(something: any): void {
-		console.log(something);
-		// this.setState({...this.state, image: {zoom: true, alt, src}});
+	zoomIn(event: React.MouseEvent<HTMLImageElement, any>): void {
+		const target = event.nativeEvent.target;
+		this.setState({image: {zoom: true, src: target.src, alt: target.alt}});
+	}
+
+	zoomOut(): void {
+		this.setState({image: {zoom: false, src: '', alt: ''}});
 	}
 
 	render() {
@@ -32,10 +37,11 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 						<Card
 							key={id}
 							employee={employee}
-							onClick={this.imageClicked}
+							imageClicked={this.zoomIn}
 						/>)}
 
 					< Overlay
+						onClick={this.zoomOut}
 						src={this.state.image.src}
 						alt={this.state.image.alt}
 						visible={this.state.image.zoom}

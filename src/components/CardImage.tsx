@@ -11,11 +11,22 @@ const ImageWrapper = styled.div`
 	  height: 120px;
 	  margin-left: auto;
 	  margin-right: auto;
+	  cursor: pointer;
     }
 `;
 
-const CardImage = (props: Readonly<{ src: string, alt: string }>) => {
+type Props = { src: string, alt: string, imageClicked: React.MouseEventHandler };
+
+const CardImage = (props: Readonly<Props>) => {
 	const onError = (errorEvent: any) => errorEvent.nativeEvent.target.src = '/default-avatar.png';
-	return (<ImageWrapper><img src={props.src} alt={props.alt} onError={onError}/></ImageWrapper>);
+	return (
+		<ImageWrapper>
+			<img
+				src={props.src}
+				alt={props.alt}
+				onError={onError}
+				onClick={props.imageClicked}
+			/>
+		</ImageWrapper>);
 };
 export default CardImage;
