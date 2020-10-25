@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-	padding: 50px;
-	color: #c7c5c5;
-	height: 100px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	padding: 50px;
+	color: #c7c5c5;
+	height: 100px;
 	& span {
 		font-weight: 400;
 	}
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 	}
 `;
 
-const EmptyList = (props: any) => {
+const EmptyList = () => {
 	return (
 		<Wrapper>
 			<svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">

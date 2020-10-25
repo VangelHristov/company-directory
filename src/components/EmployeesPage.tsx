@@ -83,8 +83,8 @@ class EmployeesPage extends React.Component<{}, State> {
 		return (
 			<main>
 				<FlexContainer className={this.state.loading ? '' : 'hidden'}>
-					<span>Loading...</span>
 					<CircularProgress/>
+					<span>Loading...</span>
 				</FlexContainer>
 				<div className={this.state.loading ? 'hidden' : ''}>
 					<FlexContainer>
