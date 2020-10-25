@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Employee } from '../interfaces/employee.interface';
+import BackgroundSelect from './BackgroundSelect';
 
 const CardContent = styled.div`
   display: flex;
@@ -32,11 +33,20 @@ const CardText = styled.p`
   margin: 0;
 `;
 
-const CardBody = (props: Readonly<{ employee: Employee }>) => {
+type Props = { employee: Employee, handleColorChange: React.EventHandler<React.ChangeEvent<{ value: unknown }>> };
+
+const CardBody = (props: Readonly<Props>) => {
 	return (
 		<CardContent>
-			<CardHeader>{props.employee.name}</CardHeader>
-			<CardSubHeader>{props.employee.title} at {props.employee.company}</CardSubHeader>
+			<div className='flex flex-justify-space-between w-100 flex-align-center'>
+				<CardHeader>{props.employee.name}</CardHeader>
+				<BackgroundSelect
+					id={props.employee.uuid}
+					selected={props.employee.background}
+					handleColorChange={props.handleColorChange}
+				/>
+			</div>
+			<CardSubHeader>{props.employee.company}</CardSubHeader>
 			<CardText>{props.employee.bio}</CardText>
 		</CardContent>
 	);

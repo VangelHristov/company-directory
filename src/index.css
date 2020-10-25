@@ -23,3 +23,31 @@ body {
 .hidden {
 	display: none !important;
 }
+
+.flex {
+	display: flex;
+}
+
+.flex-dir-col {
+	flex-direction: column;
+}
+
+.flex-align-center {
+	align-items: center;
+}
+
+.flex-justify-center {
+	justify-content: center;
+}
+
+.flex-justify-space-between {
+	justify-content: space-between;
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.w-25 {
+	width: 25%;
+}

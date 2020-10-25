@@ -1,4 +1,6 @@
-export interface Employee {
+import { ListItem } from './list-item.interface';
+
+export interface Employee extends ListItem {
 	uuid: string;
 	company: string;
 	bio: string;
