@@ -35,7 +35,7 @@ const CardText = styled.p`
 
 type Props = { employee: Employee, handleColorChange: EventHandler<ChangeEvent<{ value: unknown }>> };
 
-const CardBody = (props: Readonly<Props>) => {
+const CardBody = (props: Readonly<Props>): JSX.Element => {
 	return (
 		<CardContent>
 			<div className='flex flex-justify-space-between w-100 flex-align-center'>

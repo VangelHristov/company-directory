@@ -11,7 +11,7 @@ const Header = styled.header`
 type Props = {setFilter: ChangeEventHandler<HTMLInputElement>};
 
 class ListHeader extends React.Component<Props> {
-	render() {
+	render(): JSX.Element {
 		return (
 			<Header>
 				<TextField

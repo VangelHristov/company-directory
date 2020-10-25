@@ -30,7 +30,7 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 		this.setState({image: {zoom: false, src: '', alt: ''}});
 	}
 
-	render() {
+	render(): JSX.Element {
 		if (this.props.employees.length > 0) {
 			return (
 				<div>

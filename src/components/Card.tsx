@@ -64,7 +64,7 @@ class Card extends React.Component<Props, { employee: Employee }> {
 		this.labelChange$.next(event.target.value);
 	}
 
-	render() {
+	render(): JSX.Element {
 		return (
 			<Wrapper background={this.state.employee.background}>
 				<CardImage

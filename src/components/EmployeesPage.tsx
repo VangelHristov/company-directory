@@ -70,7 +70,7 @@ class EmployeesPage extends React.Component<{}, State> {
 		this.dispose$.complete();
 	}
 
-	getNextPage(event: unknown, pageNumber: number, filter: string = ''): void {
+	getNextPage(event: unknown, pageNumber: number, filter: string = this.state.page.filter): void {
 		this.page$.next({
 			size: this.state.page.size,
 			number: pageNumber - 1,
@@ -82,7 +82,7 @@ class EmployeesPage extends React.Component<{}, State> {
 		this.filter$.next(event.target.value);
 	}
 
-	render() {
+	render(): JSX.Element {
 		return (
 			<main>
 				<FlexContainer className={this.state.loading ? 'mt-40' : 'hidden'}>

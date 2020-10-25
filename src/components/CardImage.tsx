@@ -17,7 +17,7 @@ const ImageWrapper = styled.div`
 
 type Props = { src: string, alt: string, imageClicked: MouseEventHandler<HTMLImageElement> };
 
-const CardImage = (props: Readonly<Props>) => {
+const CardImage = (props: Readonly<Props>): JSX.Element => {
 	const onError = (errorEvent: SyntheticEvent<HTMLImageElement, Event>) =>
 		errorEvent.currentTarget.src = '/default-avatar.png';
 

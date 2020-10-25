@@ -3,7 +3,7 @@ import React, { ChangeEvent, EventHandler } from 'react';
 
 type Props = { label: string, handleLabelChange: EventHandler<ChangeEvent<HTMLInputElement>> };
 
-const CardFooter = (props: Readonly<Props>) => {
+const CardFooter = (props: Readonly<Props>): JSX.Element => {
 	return (
 		<TextField
 			classes={{root: 'ml-20'}}

@@ -19,7 +19,7 @@ class BackgroundSelect extends React.Component<Props, State> {
 		]
 	};
 
-	render() {
+	render(): JSX.Element {
 		return (
 			<FormControl classes={{root: 'w-25'}}>
 				<InputLabel id={'label' + this.props.id}>Background</InputLabel>

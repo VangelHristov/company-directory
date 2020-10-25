@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 	}
 `;
 
-const EmptyList = () => {
+const EmptyList = (): JSX.Element => {
 	return (
 		<Wrapper className='center'>
 			<svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">

@@ -21,7 +21,7 @@ const OverlayDiv = styled.div<{ readonly visible: boolean } & {}>`
 
 type Props = { src: string, alt: string, visible: boolean, onClick: MouseEventHandler<HTMLDivElement> };
 
-const Overlay = (props: Readonly<Props>) => {
+const Overlay = (props: Readonly<Props>): JSX.Element => {
 	return (
 		<OverlayDiv
 			className='center'
