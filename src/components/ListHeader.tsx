@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core';
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 
 const Header = styled.header`
@@ -8,14 +8,14 @@ const Header = styled.header`
 	justify-content: space-between;
 `;
 
-type Props = {setFilter: React.ChangeEventHandler<HTMLInputElement>};
+type Props = {setFilter: ChangeEventHandler<HTMLInputElement>};
 
 class ListHeader extends React.Component<Props> {
 	render() {
 		return (
 			<Header>
 				<TextField
-					id="standard-search"
+					id="search"
 					label="Search by label"
 					type="search"
 					onChange={this.props.setFilter}/>

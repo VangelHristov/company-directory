@@ -16,14 +16,6 @@ export class EmployeesService {
 	private static readonly apiUrl = 'https://hiring.rewardgateway.net/list';
 	private static readonly auth = {username: 'medium', password: 'medium'};
 
-	private static isMatch(source: string, searchedValue: string): boolean {
-		if (!source || !searchedValue) {
-			return false;
-		}
-
-		return source.toUpperCase().includes(searchedValue.toUpperCase());
-	};
-
 	public static getEmployees$(page: PageOptions): Observable<PagedData<Employee>> {
 		if (EmployeesService.employees.length > 0) {
 			return of(EmployeesService.getPage(page.number, page.size, page.filter));
@@ -49,7 +41,7 @@ export class EmployeesService {
 		StorageService.saveLabel(label, employeeId);
 		const employeeToBeUpdated = EmployeesService.employees.find(employee => employee.uuid === employeeId);
 		if (employeeToBeUpdated !== undefined) {
-			employeeToBeUpdated.background = label;
+			employeeToBeUpdated.label = label;
 		}
 	}
 
@@ -92,5 +84,13 @@ export class EmployeesService {
 
 			return employee;
 		});
+	}
+
+	private static isMatch(source: string, searchedValue: string): boolean {
+		if (!source || !searchedValue) {
+			return false;
+		}
+
+		return source.toUpperCase().includes(searchedValue.toUpperCase());
 	};
 }

@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 const OverlayDiv = styled.div<{ readonly visible: boolean } & {}>`
 	display: ${props => props.visible ? 'flex' : 'none'};
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 	position: fixed;
 	width: 100vw
  	height: 100wh;
@@ -22,11 +19,14 @@ const OverlayDiv = styled.div<{ readonly visible: boolean } & {}>`
 	}
 `;
 
-type Props = { src: string, alt: string, visible: boolean, onClick: React.MouseEventHandler<HTMLDivElement> };
+type Props = { src: string, alt: string, visible: boolean, onClick: MouseEventHandler<HTMLDivElement> };
 
 const Overlay = (props: Readonly<Props>) => {
 	return (
-		<OverlayDiv visible={props.visible} onClick={props.onClick}>
+		<OverlayDiv
+			className='center'
+			visible={props.visible}
+			onClick={props.onClick}>
 			<img src={props.src} alt={props.alt}/>
 		</OverlayDiv>
 	);

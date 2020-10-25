@@ -16,13 +16,14 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 
 	constructor(props: { readonly employees: Employee[] }) {
 		super(props);
+
 		this.zoomIn = this.zoomIn.bind(this);
 		this.zoomOut = this.zoomOut.bind(this);
 	}
 
-	zoomIn(event: React.MouseEvent<HTMLImageElement, any>): void {
-		const target = event.nativeEvent.target;
-		this.setState({image: {zoom: true, src: target.src, alt: target.alt}});
+	zoomIn(event: React.MouseEvent<HTMLImageElement>): void {
+		const {src, alt} = event.currentTarget;
+		this.setState({image: {zoom: true, src, alt}});
 	}
 
 	zoomOut(): void {

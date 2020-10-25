@@ -35,6 +35,7 @@ class EmployeesPage extends React.Component<{}, State> {
 
 	constructor(props: Readonly<{}>) {
 		super(props);
+
 		this.getNextPage = this.getNextPage.bind(this);
 		this.setFilter = this.setFilter.bind(this);
 
@@ -47,7 +48,10 @@ class EmployeesPage extends React.Component<{}, State> {
 					}))),
 				takeUntil(this.dispose$)
 			)
-			.subscribe((response: PagedData<Employee>) => this.setState({loading: false, ...response}));
+			.subscribe((response: PagedData<Employee>) => {
+				this.setState({loading: false, ...response});
+				window.scrollTo({top: 0, behavior: 'smooth'});
+			});
 
 		this.filter$
 			.pipe(
@@ -81,23 +85,21 @@ class EmployeesPage extends React.Component<{}, State> {
 	render() {
 		return (
 			<main>
-				<FlexContainer className={this.state.loading ? '' : 'hidden'}>
+				<FlexContainer className={this.state.loading ? 'mt-40' : 'hidden'}>
 					<CircularProgress/>
 					<span>Loading...</span>
 				</FlexContainer>
-				<div className={this.state.loading ? 'hidden' : ''}>
-					<FlexContainer>
-						<ListHeader setFilter={this.setFilter}/>
-						<EmployeesList employees={this.state.data}/>
-						<Pagination
-							className={'mt-40 mb-40 ' + (this.state.data.length < 1 ? 'hidden' : '')}
-							count={this.state.page.totalPages}
-							variant='outlined'
-							shape='rounded'
-							size='large'
-							onChange={this.getNextPage}/>
-					</FlexContainer>
-				</div>
+				<FlexContainer className={this.state.loading ? 'hidden' : ''}>
+					<ListHeader setFilter={this.setFilter}/>
+					<EmployeesList employees={this.state.data}/>
+					<Pagination
+						className={'mt-40 mb-40 ' + (this.state.data.length < 1 ? 'hidden' : '')}
+						count={this.state.page.totalPages}
+						variant='outlined'
+						shape='rounded'
+						size='large'
+						onChange={this.getNextPage}/>
+				</FlexContainer>
 				<Snackbar
 					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
 					open={this.state.showNotification}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, MouseEventHandler } from 'react';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ import CardBody from './CardBody';
 import CardFooter from './CardFooter';
 import CardImage from './CardImage';
 
-const CardDiv = styled.div<{ readonly background: string }>`
+const Wrapper = styled.div<{ readonly background: string }>`
   font-family: 'Open Sans', sans-serif;
   width: 800px;
   height: 200px;
@@ -20,11 +20,10 @@ const CardDiv = styled.div<{ readonly background: string }>`
   overflow: hidden;
   margin-top: 40px;
   z-index: 2;
-  position: relative;
   display: flex;
 `;
 
-type Props = { employee: Employee, imageClicked: React.MouseEventHandler<any> };
+type Props = { employee: Employee, imageClicked: MouseEventHandler<HTMLImageElement> };
 
 class Card extends React.Component<Props, { employee: Employee }> {
 	private labelChange$ = new Subject<string>();
@@ -55,7 +54,7 @@ class Card extends React.Component<Props, { employee: Employee }> {
 		this.setState({employee: nextProps.employee});
 	}
 
-	handleColorChange(event: React.ChangeEvent<{ value: unknown }>) {
+	handleColorChange(event: ChangeEvent<{ value: unknown }>) {
 		const background = event.target.value as string;
 		EmployeesService.updateBackground(background, this.props.employee.uuid);
 		this.setState({employee: {...this.state.employee, background}});
@@ -67,13 +66,13 @@ class Card extends React.Component<Props, { employee: Employee }> {
 
 	render() {
 		return (
-			<CardDiv className='card' background={this.state.employee.background}>
+			<Wrapper background={this.state.employee.background}>
 				<CardImage
 					src={this.state.employee.avatar}
 					alt={this.state.employee.name}
 					imageClicked={this.props.imageClicked}
 				/>
-				<div>
+				<article>
 					<CardBody
 						employee={this.state.employee}
 						handleColorChange={this.handleColorChange}
@@ -82,8 +81,8 @@ class Card extends React.Component<Props, { employee: Employee }> {
 						label={this.state.employee.label}
 						handleLabelChange={this.handleLabelChange}
 					/>
-				</div>
-			</CardDiv>
+				</article>
+			</Wrapper>
 		);
 	}
 }

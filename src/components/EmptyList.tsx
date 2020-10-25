@@ -2,10 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 	padding: 50px;
 	color: #c7c5c5;
 	height: 100px;
@@ -22,7 +18,7 @@ const Wrapper = styled.div`
 
 const EmptyList = () => {
 	return (
-		<Wrapper>
+		<Wrapper className='center'>
 			<svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
 				<g transform="translate(0 1)" fill="none" fillRule="evenodd">
 					<ellipse cx="32" cy="33" rx="32" ry="7"/>
@@ -35,7 +31,7 @@ const EmptyList = () => {
 					</g>
 				</g>
 			</svg>
-			<span>No Data</span>
+			<span>No results</span>
 		</Wrapper>
 	);
 };

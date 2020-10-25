@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 const ImageWrapper = styled.div`
@@ -15,10 +15,12 @@ const ImageWrapper = styled.div`
     }
 `;
 
-type Props = { src: string, alt: string, imageClicked: React.MouseEventHandler };
+type Props = { src: string, alt: string, imageClicked: MouseEventHandler<HTMLImageElement> };
 
 const CardImage = (props: Readonly<Props>) => {
-	const onError = (errorEvent: any) => errorEvent.nativeEvent.target.src = '/default-avatar.png';
+	const onError = (errorEvent: SyntheticEvent<HTMLImageElement, Event>) =>
+		errorEvent.currentTarget.src = '/default-avatar.png';
+
 	return (
 		<ImageWrapper>
 			<img

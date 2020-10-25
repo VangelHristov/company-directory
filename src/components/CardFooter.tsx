@@ -5,13 +5,12 @@ type Props = { label: string, handleLabelChange: EventHandler<ChangeEvent<HTMLIn
 
 const CardFooter = (props: Readonly<Props>) => {
 	return (
-		<div className='ml-20'>
-			<TextField
-				label="Label"
-				onChange={props.handleLabelChange}
-				defaultValue={props.label}
-			/>
-		</div>
+		<TextField
+			classes={{root: 'ml-20'}}
+			label="Label"
+			onChange={props.handleLabelChange}
+			defaultValue={props.label}
+		/>
 	);
 };
 

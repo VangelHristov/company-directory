@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, EventHandler } from 'react';
 import styled from 'styled-components';
 import { Employee } from '../interfaces/employee.interface';
 import BackgroundSelect from './BackgroundSelect';
@@ -33,7 +33,7 @@ const CardText = styled.p`
   margin: 0;
 `;
 
-type Props = { employee: Employee, handleColorChange: React.EventHandler<React.ChangeEvent<{ value: unknown }>> };
+type Props = { employee: Employee, handleColorChange: EventHandler<ChangeEvent<{ value: unknown }>> };
 
 const CardBody = (props: Readonly<Props>) => {
 	return (
