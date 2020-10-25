@@ -13,7 +13,6 @@ axiosRetry(axios, {retries: 5});
 
 export class EmployeesService {
 	private static employees: Employee[] = [];
-	private static storageService = new StorageService();
 	private static readonly apiUrl = 'https://hiring.rewardgateway.net/list';
 	private static readonly auth = {username: 'medium', password: 'medium'};
 
@@ -39,7 +38,7 @@ export class EmployeesService {
 	}
 
 	public static updateBackground(background: string, employeeId: string): void {
-		EmployeesService.storageService.saveBackground(background, employeeId);
+		StorageService.saveBackground(background, employeeId);
 		const employeeToBeUpdated = EmployeesService.employees.find(employee => employee.uuid === employeeId);
 		if (employeeToBeUpdated !== undefined) {
 			employeeToBeUpdated.background = background;
@@ -47,7 +46,7 @@ export class EmployeesService {
 	}
 
 	public static updateLabel(label: string, employeeId: string): void {
-		EmployeesService.storageService.saveLabel(label, employeeId);
+		StorageService.saveLabel(label, employeeId);
 		const employeeToBeUpdated = EmployeesService.employees.find(employee => employee.uuid === employeeId);
 		if (employeeToBeUpdated !== undefined) {
 			employeeToBeUpdated.background = label;
@@ -76,7 +75,7 @@ export class EmployeesService {
 		totalElements = employees.length;
 		totalPages = (totalElements > 0 && size > 0) ? Math.ceil(totalElements / size) : 0;
 
-		const storageItems = EmployeesService.storageService.getStorageItems();
+		const storageItems = StorageService.getStorageItems();
 		employees = EmployeesService.mapLabelsAndBackground(employees.slice(startIndex, endIndex), storageItems);
 
 		return {

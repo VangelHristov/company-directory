@@ -1,39 +1,39 @@
 import { ListItem } from '../interfaces/list-item.interface';
 
 export class StorageService {
-	private storage = window.localStorage;
-	private itemsKey = 'ListItems';
+	private static storage = window.localStorage;
+	private static itemsKey = 'ListItems';
 
-	saveBackground(background: string, itemId: string): void {
-		const items: StorageListItems = this.getListItems(this.itemsKey);
+	public static saveBackground(background: string, itemId: string): void {
+		const items: StorageListItems = StorageService.getListItems(StorageService.itemsKey);
 		const item: ListItem = items[itemId] as ListItem ?? {};
 
 		item.background = background;
 		items[itemId] = item;
 
-		this.setObject(items, this.itemsKey);
+		StorageService.setObject(items, StorageService.itemsKey);
 	}
 
-	saveLabel(label: string, itemId: string): void {
-		const items: StorageListItems = this.getListItems(this.itemsKey);
+	public static saveLabel(label: string, itemId: string): void {
+		const items: StorageListItems = StorageService.getListItems(StorageService.itemsKey);
 		const item: ListItem = items[itemId] as ListItem ?? {};
 
 		item.label = label;
 		items[itemId] = item;
 
-		this.setObject(items, this.itemsKey);
+		StorageService.setObject(items, StorageService.itemsKey);
 	}
 
-	getStorageItems(): StorageListItems {
-		return this.getListItems(this.itemsKey);
+	public static getStorageItems(): StorageListItems {
+		return StorageService.getListItems(StorageService.itemsKey);
 	}
 
-	private setObject(obj: StorageListItems, key: string): void {
-		this.storage.setItem(key, JSON.stringify(obj));
+	private static setObject(obj: StorageListItems, key: string): void {
+		StorageService.storage.setItem(key, JSON.stringify(obj));
 	}
 
-	private getListItems(key: string): StorageListItems {
-		const item = this.storage.getItem(key);
+	private static getListItems(key: string): StorageListItems {
+		const item = StorageService.storage.getItem(key);
 
 		if (item === null) {
 			return {};
