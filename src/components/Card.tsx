@@ -1,6 +1,6 @@
-import React, { ChangeEvent, MouseEventHandler } from 'react';
+import React, { ChangeEvent, memo, MouseEventHandler } from 'react';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import styled from 'styled-components';
 import { Employee } from '../interfaces/employee.interface';
 import { EmployeesService } from '../services/employees.service';
@@ -8,7 +8,7 @@ import CardBody from './CardBody';
 import CardFooter from './CardFooter';
 import CardImage from './CardImage';
 
-const Wrapper = styled.div<{ readonly background: string }>`
+const Wrapper = memo(styled.div<{ readonly background: string }>`
   font-family: 'Open Sans', sans-serif;
   width: 800px;
   height: 200px;
@@ -21,7 +21,7 @@ const Wrapper = styled.div<{ readonly background: string }>`
   margin-top: 40px;
   z-index: 2;
   display: flex;
-`;
+`);
 
 type Props = { employee: Employee, imageClicked: MouseEventHandler<HTMLImageElement> };
 
@@ -41,6 +41,7 @@ class Card extends React.Component<Props, { employee: Employee }> {
 
 		this.labelChange$
 			.pipe(
+				distinctUntilChanged(),
 				debounceTime(1000),
 				takeUntil(this.dispose$)
 			)
@@ -50,17 +51,19 @@ class Card extends React.Component<Props, { employee: Employee }> {
 			});
 	}
 
-	componentWillReceiveProps(nextProps: Readonly<Props>) {
-		this.setState({employee: nextProps.employee});
+	static getDerivedStateFromProps(nextProps: Readonly<Props>) {
+		return {employee: nextProps.employee};
 	}
 
 	handleColorChange(event: ChangeEvent<{ value: unknown }>) {
+		event.stopPropagation();
 		const background = event.target.value as string;
 		EmployeesService.updateBackground(background, this.props.employee.uuid);
 		this.setState({employee: {...this.state.employee, background}});
 	}
 
 	handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
+		event.stopPropagation();
 		this.labelChange$.next(event.target.value);
 	}
 

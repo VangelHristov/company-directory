@@ -1,7 +1,7 @@
-import React, { MouseEventHandler, SyntheticEvent } from 'react';
+import React, { memo, MouseEventHandler, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
-const ImageWrapper = styled.div`
+const ImageWrapper = memo(styled.div`
 	min-width: 120px;
 	min-height: 180px;
 	word-break: break-word;
@@ -13,7 +13,7 @@ const ImageWrapper = styled.div`
 	  margin-right: auto;
 	  cursor: pointer;
     }
-`;
+`);
 
 type Props = { src: string, alt: string, imageClicked: MouseEventHandler<HTMLImageElement> };
 
@@ -31,4 +31,4 @@ const CardImage = (props: Readonly<Props>): JSX.Element => {
 			/>
 		</ImageWrapper>);
 };
-export default CardImage;
+export default memo(CardImage);

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { memo, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 const OverlayDiv = styled.div<{ readonly visible: boolean } & {}>`
@@ -32,4 +32,4 @@ const Overlay = (props: Readonly<Props>): JSX.Element => {
 	);
 };
 
-export default Overlay;
+export default memo(Overlay);

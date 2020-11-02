@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 
 const FlexContainer = styled.div`
@@ -8,4 +9,4 @@ const FlexContainer = styled.div`
 	min-height: 100vh;
 `;
 
-export default FlexContainer;
+export default memo(FlexContainer);

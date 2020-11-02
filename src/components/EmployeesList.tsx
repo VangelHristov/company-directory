@@ -5,13 +5,11 @@ import Card from './Card';
 import EmptyList from './EmptyList';
 import Overlay from './Overlay';
 
-class EmployeesList extends React.Component<{ employees: Employee[] }, { image: ImageInterface }> {
+class EmployeesList extends React.PureComponent<{ employees: Employee[] }, ImageInterface> {
 	state = {
-		image: {
-			zoom: false,
-			src: '',
-			alt: ''
-		}
+		zoom: false,
+		src: '',
+		alt: ''
 	};
 
 	constructor(props: { readonly employees: Employee[] }) {
@@ -23,11 +21,11 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 
 	zoomIn(event: React.MouseEvent<HTMLImageElement>): void {
 		const {src, alt} = event.currentTarget;
-		this.setState({image: {zoom: true, src, alt}});
+		this.setState({zoom: true, src, alt});
 	}
 
 	zoomOut(): void {
-		this.setState({image: {zoom: false, src: '', alt: ''}});
+		this.setState({zoom: false, src: '', alt: ''});
 	}
 
 	render(): JSX.Element {
@@ -43,9 +41,9 @@ class EmployeesList extends React.Component<{ employees: Employee[] }, { image: 
 
 					< Overlay
 						onClick={this.zoomOut}
-						src={this.state.image.src}
-						alt={this.state.image.alt}
-						visible={this.state.image.zoom}
+						src={this.state.src}
+						alt={this.state.alt}
+						visible={this.state.zoom}
 					/>
 				</div>
 			);

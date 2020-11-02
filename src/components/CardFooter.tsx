@@ -1,5 +1,5 @@
 import TextField from '@material-ui/core/TextField';
-import React, { ChangeEvent, EventHandler } from 'react';
+import React, { ChangeEvent, EventHandler, memo } from 'react';
 
 type Props = { label: string, handleLabelChange: EventHandler<ChangeEvent<HTMLInputElement>> };
 
@@ -14,4 +14,4 @@ const CardFooter = (props: Readonly<Props>): JSX.Element => {
 	);
 };
 
-export default CardFooter;
+export default memo(CardFooter);

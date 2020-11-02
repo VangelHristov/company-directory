@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -36,4 +36,4 @@ const EmptyList = (): JSX.Element => {
 	);
 };
 
-export default EmptyList;
+export default memo(EmptyList);

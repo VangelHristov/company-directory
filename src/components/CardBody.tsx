@@ -1,9 +1,9 @@
-import React, { ChangeEvent, EventHandler } from 'react';
+import React, { ChangeEvent, EventHandler, memo } from 'react';
 import styled from 'styled-components';
 import { Employee } from '../interfaces/employee.interface';
 import BackgroundSelect from './BackgroundSelect';
 
-const CardContent = styled.div`
+const CardContent = memo(styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -11,27 +11,27 @@ const CardContent = styled.div`
   z-index: 2;
   position: relative;
   padding: 0px 20px;
-`;
+`);
 
-const CardHeader = styled.h1`
+const CardHeader = memo(styled.h1`
   font-size: 1.2em;
   margin: 0;
-`;
+`);
 
-const CardSubHeader = styled.h2`
+const CardSubHeader = memo(styled.h2`
   font-size: 1em;
   color: #009688;
   font-style: italic;
   margin: 0;
-`;
+`);
 
-const CardText = styled.p`
+const CardText = memo(styled.p`
   padding: 10px 0px;
   color: #5A5A5A;
   line-height: 1.2;
   font-style: initial;
   margin: 0;
-`;
+`);
 
 type Props = { employee: Employee, handleColorChange: EventHandler<ChangeEvent<{ value: unknown }>> };
 
